@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #f9f9f9; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: #ffffff; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            border-radius: 8px; 
+            overflow: hidden; 
+            border: 1px solid #e0e0e0;
+        }
+        .header { 
+            background: linear-gradient(90deg, #0073e6, #00b4d8); 
+            padding: 20px; 
+            text-align: center; 
+            color: white; 
+        }
+        .header img { 
+            max-height: 60px; 
+        }
+        .header h1 { 
+            margin: 0; 
+            font-size: 28px; 
+        }
+        .content { 
+            padding: 30px 20px; 
+            text-align: center; 
+        }
+        .content h2 { 
+            color: #333; 
+            font-size: 22px; 
+            margin-bottom: 15px; 
+        }
+        .content p { 
+            font-size: 16px; 
+            color: #555; 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+        }
+        .otp { 
+            font-size: 30px; 
+            font-weight: bold; 
+            color: #0073e6; 
+            padding: 10px 20px; 
+            background-color: #f0f8ff; 
+            border-radius: 8px; 
+            display: block; /* Chuyển thành block để đứng riêng biệt */
+            margin: 20px auto; /* Giữa màn hình */
+            border: 2px solid #0073e6; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .otp:hover {
+            background-color: #0073e6; 
+            color: white; 
+            cursor: pointer; 
+        }
+        .copy-button {
+            padding: 8px 12px; 
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;  
+            margin-bottom: 10px; /* Khoảng cách dưới nút */
+        }
+        .copy-button:hover {
+            background-color: #005bb5;
+        }
+        .copy-confirmation {
+            font-size: 20px; 
+            color: green; 
+            visibility: hidden; /* Ẩn dấu tick ban đầu */
+            margin-bottom: 20px; /* Khoảng cách dưới dấu tick */
+        }
+        .footer { 
+            background-color: #f2f2f2; 
+            padding: 15px; 
+            text-align: center; 
+            font-size: 14px; 
+            color: #777; 
+            border-top: 1px solid #e0e0e0; 
+        }
+        .footer p { 
+            margin: 0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="{{.LogoURL}}" alt="Logo" />
+            <h1>OTP Verification</h1>
+        </div>
+        <div class="content">
+            <h2>Xin chào!</h2>
+            <p>Để tiếp tục quá trình xác minh, vui lòng sử dụng mã OTP dưới đây:</p>
+            <div class="otp" id="otp-code">{{.OTP}}</div>
+            <!-- <button class="copy-button" onclick="copyToClipboard()">Sao chép mã OTP</button>
+            <span class="copy-confirmation" id="copy-confirmation">✔️</span> Dấu tick -->
+            <p>Mã này có giá trị trong vòng 10 phút.</p>
+        </div>
+        <div class="footer">
+            <p>Email này được gửi tự động. Vui lòng không trả lời lại.</p>
+            <p>&copy; 2024 <a href="https://www.example.com" target="_blank">PhucThinhCompany</a>. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            // Lấy mã OTP từ phần tử HTML
+            const otp = document.getElementById("otp-code").innerText;
+            
+            // Tạo một textarea tạm thời để sao chép nội dung
+            const tempInput = document.createElement("textarea");
+            tempInput.value = otp;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // Hiện dấu tick
+            const confirmation = document.getElementById("copy-confirmation");
+            confirmation.style.visibility = "visible"; // Hiện dấu tick
+
+            // Ẩn dấu tick sau 2 giây
+            setTimeout(() => {
+                confirmation.style.visibility = "hidden";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
