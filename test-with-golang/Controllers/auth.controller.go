@@ -105,6 +105,7 @@ func Login_Admin(c *gin.Context, input Models.LoginInput) {
 	}
 
 	claims := auth.BaseClaims{
+		UserID:   user.ID,
 		Username: user.Username,
 		Name:     user.Name,
 		Title:    "Admin",
@@ -136,10 +137,10 @@ func Login_Teacher(c *gin.Context, input Models.LoginInput) {
 	}
 
 	claims := auth.BaseClaims{
-		Title:     "Teacher",
-		Username:  teacher.Username,
-		Name:      teacher.TeacherName,
-		UserID: teacher.ID,
+		Title:    "Teacher",
+		Username: teacher.Username,
+		Name:     teacher.TeacherName,
+		UserID:   teacher.ID,
 	}
 
 	//Tạo JWT cho người dùng

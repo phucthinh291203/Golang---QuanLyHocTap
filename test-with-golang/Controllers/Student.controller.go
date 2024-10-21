@@ -48,6 +48,9 @@ func (ctrl *studentController) FindOne(ctx *gin.Context, data Models.MyData) (Mo
 	student, class := ctrl.service.FindById(id, data)
 	return student, class
 }
+
+
+
 func (ctrl *studentController) Update(ctx *gin.Context) Models.Student {
 	var data Models.Student
 	id := ctx.Param("id")

@@ -36,7 +36,7 @@ func NewStudent(collection *mongo.Collection) StudentDTO {
 	return dto
 }
 
-func (service *studentDTO) Create(newData Models.Student,data Models.MyData) error {
+func (service *studentDTO) Create(newData Models.Student, data Models.MyData) error {
 	//Tìm ra giáo viên hiện tại
 	var class Models.Class
 	err := service.collection.FindOne(context.TODO(), bson.M{"_id": newData.ClassID}).Decode(&class)
@@ -67,7 +67,7 @@ func (service *studentDTO) FindAll() []Models.Student {
 func (service *studentDTO) FindById(id string, data Models.MyData) (Models.Student, string) {
 	var student Models.Student
 	var class Models.Class
-	classCollection := data.ClassCollection
+	// classCollection := data.ClassCollection
 	objectID, _ := primitive.ObjectIDFromHex(id)
 
 	err := service.collection.FindOne(context.TODO(), bson.M{"_id": objectID}).Decode(&student)
@@ -75,10 +75,10 @@ func (service *studentDTO) FindById(id string, data Models.MyData) (Models.Stude
 		return Models.Student{}, ""
 	}
 
-	err = classCollection.FindOne(context.TODO(), bson.M{"_id": student.ClassID}).Decode(&class)
-	if err != nil {
-		return Models.Student{}, ""
-	}
+	// err = classCollection.FindOne(context.TODO(), bson.M{"_id": student.ClassID}).Decode(&class)
+	// if err != nil {
+	// 	return Models.Student{}, ""
+	// }
 
 	// pipeline := mongo.Pipeline{
 	// 	{{Key: "$match", Value: bson.M{"_id": objectID}}},

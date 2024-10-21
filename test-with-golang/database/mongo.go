@@ -40,15 +40,18 @@ func ConnectToDatabase() {
 	mongoClient = client
 
 	data = Models.MyData{
-		ClassCollection:    mongoClient.Database(GetDBName()).Collection("classCollection"),
-		StudentCollection:  mongoClient.Database(GetDBName()).Collection("studentCollection"),
-		UserCollection:     mongoClient.Database(GetDBName()).Collection("userCollection"),
-		ScoreCollection:    mongoClient.Database(GetDBName()).Collection("scoreCollection"),
-		SubjectCollection:  mongoClient.Database(GetDBName()).Collection("subjectCollection"),
-		TeacherCollection:  mongoClient.Database(GetDBName()).Collection("teacherCollection"),
-		BangDiemCollection: mongoClient.Database(GetDBName()).Collection("bangDiemCollection"),
-		OTPCollection:      mongoClient.Database(GetDBName()).Collection("OTPCollection"),
-		SMSCollection:      mongoClient.Database(GetDBName()).Collection("SMSCollection"),
+		ClassCollection:             mongoClient.Database(GetDBName()).Collection("classCollection"),
+		StudentCollection:           mongoClient.Database(GetDBName()).Collection("studentCollection"),
+		UserCollection:              mongoClient.Database(GetDBName()).Collection("userCollection"),
+		ScoreCollection:             mongoClient.Database(GetDBName()).Collection("scoreCollection"),
+		SubjectCollection:           mongoClient.Database(GetDBName()).Collection("subjectCollection"),
+		TeacherCollection:           mongoClient.Database(GetDBName()).Collection("teacherCollection"),
+		BangDiemCollection:          mongoClient.Database(GetDBName()).Collection("bangDiemCollection"),
+		OTPCollection:               mongoClient.Database(GetDBName()).Collection("OTPCollection"),
+		SMSCollection:               mongoClient.Database(GetDBName()).Collection("SMSCollection"),
+		FileCollection:              mongoClient.Database(GetDBName()).Collection("FileCollection"),
+		HistoryUploadedCollection:   mongoClient.Database(GetDBName()).Collection("HistoryUploadedCollection"),
+		HistoryDownloadedCollection: mongoClient.Database(GetDBName()).Collection("HistoryDownloadedCollection"),
 	}
 
 	if mongoClient == nil {
@@ -92,6 +95,18 @@ func GetBangDiemCollection() *mongo.Collection {
 
 func GetOTPCollection() *mongo.Collection {
 	return data.OTPCollection
+}
+
+func GetFileCollection() *mongo.Collection {
+	return data.FileCollection
+}
+
+func GetHistoryUploadedCollection() *mongo.Collection {
+	return data.HistoryUploadedCollection
+}
+
+func GetHistoryDownloadedCollection() *mongo.Collection {
+	return data.HistoryDownloadedCollection
 }
 
 func GetDBName() string {
@@ -180,13 +195,11 @@ func TinhDiemTrungBinh(scores []Models.Score) float32 {
 func StartOTPCleaner(data Models.MyData) {
 	c := cron.New()
 	c.AddFunc("*/2 * * * *", func() {
-		log.Println("Running RemoveExpiredOTPs...")
 		auth.RemoveExpiredOTPs(data)
 	})
 
 	//Bắt đầu thực hiện
 	c.Start()
-	log.Println("OTPCleaner started. Jobs will run every 2 minutes.")
 
 	//Chạy vô tận
 	select {}

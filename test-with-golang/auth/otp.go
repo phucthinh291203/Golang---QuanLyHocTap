@@ -91,8 +91,6 @@ func RemoveExpiredOTPs(data Models.MyData) {
 	if err != nil {
 		log.Println("Lỗi khi xóa OTP đã hết hạn:", err)
 	} else {
-		log.Println("Đã xóa các OTP đã hết hạn thành công.")
+
 	}
 }
-
-

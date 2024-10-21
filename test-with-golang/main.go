@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	log.Println("Hello world")
 	database.ConnectToDatabase()
 	data := database.GetData()
+	database.CreateMinioClient()
 
 	// Khởi động server
 	server := gin.Default()
@@ -25,7 +25,7 @@ func main() {
 	routes.SubjectRoute(server, data)
 	routes.BangDiemRoutes(server, data)
 	routes.PasswordRecovery(server, data)
-
+	routes.MinioRoute(server,data)
 	go database.StartOTPCleaner(data)
 
 	if err := server.Run(":8080"); err != nil {

@@ -45,6 +45,10 @@ func JWTAuthMiddleWare(requiredTitles string) gin.HandlerFunc {
 			ctx.Set("teacher_id", claims.UserID)
 		}
 
+		if claims.Title == "Admin" {
+			ctx.Set("admin_id", claims.UserID)
+		}
+		
 		ctx.Next()
 	}
 
